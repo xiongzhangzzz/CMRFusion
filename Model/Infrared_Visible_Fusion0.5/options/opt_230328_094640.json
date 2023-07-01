@@ -1,0 +1,100 @@
+{
+  "task": "Infrared_Visible_Fusion0.5",
+  "model": "crosssrfuse",
+  "gpu_ids": [
+    0,
+    1
+  ],
+  "dist": false,
+  "scale": 1,
+  "n_channels": 1,
+  "path": {
+    "root": "./Model",
+    "task": "./Model/Infrared_Visible_Fusion0.5",
+    "log": "./Model/Infrared_Visible_Fusion0.5",
+    "options": "./Model/Infrared_Visible_Fusion0.5/options",
+    "models": "./Model/Infrared_Visible_Fusion0.5/models",
+    "images": "./Model/Infrared_Visible_Fusion0.5/images",
+    "pretrained_net": null,
+    "pretrained_optimizer": null
+  },
+  "datasets": {
+    "train": {
+      "name": "train_dataset",
+      "dataset_type": "vif",
+      "dataroot_A": "/home/user/\u6587\u6863/dataset/MSRS-hr-lr/train/ir_0.5",
+      "dataroot_B": "/home/user/\u6587\u6863/dataset/MSRS-hr-lr/train/vi_1",
+      "dataloader_shuffle": true,
+      "dataloader_num_workers": 2,
+      "dataloader_batch_size": 16,
+      "phase": "train",
+      "scale": 1,
+      "n_channels": 1
+    },
+    "test": {
+      "name": "test_dataset",
+      "dataset_type": "vif",
+      "dataroot_A": "./testimages/40pairs/ir_0.5",
+      "dataroot_B": "./testimages/40pairs/vi_1",
+      "output_path": "./results/40pairs/crosssrfuse_0.5",
+      "phase": "test",
+      "scale": 1,
+      "n_channels": 1
+    }
+  },
+  "netG": {
+    "net_type": "crosssrfuse",
+    "in_channels": 1,
+    "out_channels": 1,
+    "upscale_factor": 2,
+    "nb_filter": [
+      64,
+      128,
+      256,
+      512
+    ],
+    "init_type": "default",
+    "scale": 1
+  },
+  "train": {
+    "G_lossfn_type": "vif",
+    "G_lossfn_weight": 1.0,
+    "E_decay": 0.999,
+    "G_optimizer_type": "adam",
+    "G_optimizer_lr": 0.001,
+    "G_optimizer_wd": 0,
+    "G_optimizer_clipgrad": null,
+    "G_optimizer_reuse": true,
+    "G_scheduler_type": "MultiStepLR",
+    "G_scheduler_milestones": [
+      10,
+      20,
+      40,
+      60,
+      80,
+      120,
+      140,
+      180
+    ],
+    "G_scheduler_gamma": 0.5,
+    "G_regularizer_orthstep": null,
+    "G_regularizer_clipstep": null,
+    "G_param_strict": true,
+    "checkpoint_test": 0,
+    "checkpoint_save": 1,
+    "checkpoint_print": 1,
+    "F_feature_layer": 34,
+    "F_weights": 1.0,
+    "F_lossfn_type": "loss",
+    "F_use_input_norm": true,
+    "F_use_range_norm": false,
+    "E_param_strict": true
+  },
+  "opt_path": "options/opt.json",
+  "is_train": true,
+  "merge_bn": false,
+  "merge_bn_startpoint": -1,
+  "find_unused_parameters": true,
+  "num_gpu": 2,
+  "rank": 0
+}
